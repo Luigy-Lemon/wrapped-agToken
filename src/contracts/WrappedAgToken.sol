@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-pragma solidity 0.8.14;
+pragma solidity ^0.8.0;
 
 import {ERC20} from "../../lib/solmate/src/tokens/ERC20.sol";
 
 import {SafeTransferLib} from "../../lib/solmate/src/utils/SafeTransferLib.sol";
 
-import {IAgToken} from "./interfaces/IAgToken.sol";
-import {ILendingPool} from  "./interfaces/ILendingPool.sol";
-import {DataTypes} from  "./types/DataTypes.sol";
+import {IAToken} from "../../lib/protocol-v2/contracts/interfaces/IAToken.sol";
+import {LendingPool} from  "../../lib/protocol-v2/contracts/protocol/lendingpool/LendingPool.sol";
+import {DataTypes} from  "../../lib/protocol-v2/contracts/protocol/libraries/types/DataTypes.sol";
 
 /// @notice Wrapped AgToken (ERC-20) implementation.
 /// @author Luigy-Lemon (https://github.com/Rari-Capital/solmate/blob/main/src/tokens/WETH.sol)
