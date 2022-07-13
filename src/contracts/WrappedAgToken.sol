@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity 0.8.14;
 
-import {ERC20} from "./tokens/ERC20.sol";
+import {ERC20} from "../../lib/solmate/src/tokens/ERC20.sol";
 
-import {SafeTransferLib} from "./utils/SafeTransferLib.sol";
+import {SafeTransferLib} from "../../lib/solmate/src/utils/SafeTransferLib.sol";
 
 import {IAgToken} from "./interfaces/IAgToken.sol";
+import {ILendingPool} from  "./interfaces/ILendingPool.sol";
+import {DataTypes} from  "./types/DataTypes.sol";
 
 /// @notice Wrapped AgToken (ERC-20) implementation.
 /// @author Luigy-Lemon (https://github.com/Rari-Capital/solmate/blob/main/src/tokens/WETH.sol)
@@ -20,23 +22,26 @@ contract WrappedAgToken is ERC20 {
     event Claimed(uint256 amount);
 
     uint256 userDeposits = 0;
+    address public owner;
     address public feeCollector;
+    address public manager;
     address public reserveAsset;
     IAgToken public immutable underlyingAgToken;
-    ILendingPool public immutable POOL;
+    LendingPool public immutable POOL;
 
 
     constructor(
-    ILendingPool pool,
     IAgToken _underlyingAgToken,
     address _feeCollector,
+    address governanceAddress,
     string memory tokenName,
-    string memory tokenSymbol,
-  ) public ERC20(tokenName, tokenSymbol, 18) {
-    POOL = pool;
+    string memory tokenSymbol
+  ) ERC20(tokenName, tokenSymbol, 18) {
     feeCollector = _feeCollector;
     underlyingAgToken = _underlyingAgToken;
-    reserveAsset = underlyingAgToken.UNDERLYING_ASSET_ADDRESS;
+    POOL = LendingPool(underlyingAgToken.POOL());
+    reserveAsset = underlyingAgToken.UNDERLYING_ASSET_ADDRESS();
+    manager = governanceAddress;
   }
 
     modifier isActive {
@@ -46,7 +51,7 @@ contract WrappedAgToken is ERC20 {
     }
 
     function deposit(uint256 amount) public {
-        safeTransferFrom(msg.sender, address(this), amount);
+        this.safeTransferFrom(msg.sender, address(this), amount);
 
         _mint(msg.sender, msg.value);
 
@@ -60,7 +65,7 @@ contract WrappedAgToken is ERC20 {
 
         userDeposits -= amount;
 
-        safeTransfer(msg.sender, amount);
+        this.safeTransfer(msg.sender, amount);
 
         emit Withdrawal(msg.sender, amount);
     }
@@ -73,7 +78,7 @@ contract WrappedAgToken is ERC20 {
         emit Claimed(claimable);
     }
 
-    function setFeeCollector(address newCollector){
+    function setFeeCollector(address newCollector) external{
         feeCollector = newCollector;
     }
 
