@@ -1,6 +1,3 @@
-[submodule "lib/protocol-v2"]
-	path = lib/protocol-v2
-	url = https://github.com/Agave-DAO/protocol-v2
 [submodule "lib/solmate"]
 	path = lib/solmate
 	url = https://github.com/rari-capital/solmate
