@@ -1,0 +1,545 @@
+{
+  "_format": "ethers-rs-sol-cache-3",
+  "paths": {
+    "artifacts": "out",
+    "build_infos": "out/build-info",
+    "sources": "src",
+    "tests": "test",
+    "scripts": "script",
+    "libraries": [
+      "lib"
+    ]
+  },
+  "files": {
+    "lib/solmate/lib/ds-test/src/test.sol": {
+      "lastModificationDate": 1657888013412,
+      "contentHash": "962996f0e05d5218857a538a62d7c47e",
+      "sourceName": "lib/solmate/lib/ds-test/src/test.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.5.0",
+      "artifacts": {
+        "DSTest": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "test.sol/DSTest.json"
+        }
+      }
+    },
+    "lib/solmate/src/tokens/ERC20.sol": {
+      "lastModificationDate": 1657888012772,
+      "contentHash": "a0b1801a2ffe030a0f4ff4d508ceb74f",
+      "sourceName": "lib/solmate/src/tokens/ERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "ERC20": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "ERC20.sol/ERC20.json"
+        }
+      }
+    },
+    "src/contracts/WrappedAgToken.sol": {
+      "lastModificationDate": 1657907066672,
+      "contentHash": "db0d7735b72c51fcd16c0453627a16fb",
+      "sourceName": "src/contracts/WrappedAgToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/solmate/src/tokens/ERC20.sol",
+        "src/contracts/interfaces/IAgToken.sol",
+        "src/contracts/interfaces/IERC20.sol",
+        "src/contracts/interfaces/ILendingPool.sol",
+        "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
+        "src/contracts/interfaces/IScaledBalanceToken.sol",
+        "src/contracts/types/DataTypes.sol"
+      ],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "WrappedAgToken": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "WrappedAgToken.sol/WrappedAgToken.json"
+        }
+      }
+    },
+    "src/contracts/interfaces/IAgToken.sol": {
+      "lastModificationDate": 1657719051049,
+      "contentHash": "5ab118671eed27137ab844643616c574",
+      "sourceName": "src/contracts/interfaces/IAgToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "src/contracts/interfaces/IERC20.sol",
+        "src/contracts/interfaces/IScaledBalanceToken.sol"
+      ],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "IAgToken": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "IAgToken.sol/IAgToken.json"
+        }
+      }
+    },
+    "src/contracts/interfaces/IERC20.sol": {
+      "lastModificationDate": 1657719051049,
+      "contentHash": "8254685c4261e8c93db0eb5b569f8461",
+      "sourceName": "src/contracts/interfaces/IERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "IERC20": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "IERC20.sol/IERC20.json"
+        }
+      }
+    },
+    "src/contracts/interfaces/ILendingPool.sol": {
+      "lastModificationDate": 1657719051049,
+      "contentHash": "ac0ba426467448cb5e53d1428dc21c46",
+      "sourceName": "src/contracts/interfaces/ILendingPool.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
+        "src/contracts/types/DataTypes.sol"
+      ],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "ILendingPool": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "ILendingPool.sol/ILendingPool.json"
+        }
+      }
+    },
+    "src/contracts/interfaces/ILendingPoolAddressesProvider.sol": {
+      "lastModificationDate": 1657719051049,
+      "contentHash": "55de03ae5f0c1b87b3b119c98407dda5",
+      "sourceName": "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "ILendingPoolAddressesProvider": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "ILendingPoolAddressesProvider.sol/ILendingPoolAddressesProvider.json"
+        }
+      }
+    },
+    "src/contracts/interfaces/IScaledBalanceToken.sol": {
+      "lastModificationDate": 1657719051049,
+      "contentHash": "819211ec2d3d10639a00733550c6f19c",
+      "sourceName": "src/contracts/interfaces/IScaledBalanceToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "IScaledBalanceToken": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "IScaledBalanceToken.sol/IScaledBalanceToken.json"
+        }
+      }
+    },
+    "src/contracts/types/DataTypes.sol": {
+      "lastModificationDate": 1657719051049,
+      "contentHash": "40e4148fa42fe92a1f7f5d226e135e54",
+      "sourceName": "src/contracts/types/DataTypes.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "DataTypes": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "DataTypes.sol/DataTypes.json"
+        }
+      }
+    },
+    "src/test/WrappedAgToken.t.sol": {
+      "lastModificationDate": 1657907845592,
+      "contentHash": "a63ae5d7c4cc1145bd4d7f2963d78c86",
+      "sourceName": "src/test/WrappedAgToken.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/solmate/lib/ds-test/src/test.sol",
+        "lib/solmate/src/tokens/ERC20.sol",
+        "src/contracts/WrappedAgToken.sol",
+        "src/contracts/interfaces/IAgToken.sol",
+        "src/contracts/interfaces/IERC20.sol",
+        "src/contracts/interfaces/ILendingPool.sol",
+        "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
+        "src/contracts/interfaces/IScaledBalanceToken.sol",
+        "src/contracts/types/DataTypes.sol",
+        "src/test/utils/DSInvariantTest.sol",
+        "src/test/utils/DSTestPlus.sol",
+        "src/test/utils/Hevm.sol"
+      ],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "BalanceSum": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "WrappedAgToken.t.sol/BalanceSum.json"
+        },
+        "ERC20Invariants": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "WrappedAgToken.t.sol/ERC20Invariants.json"
+        },
+        "ERC20Test": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "WrappedAgToken.t.sol/ERC20Test.json"
+        }
+      }
+    },
+    "src/test/utils/DSInvariantTest.sol": {
+      "lastModificationDate": 1657890824802,
+      "contentHash": "eef63c069b48071868fdcbd7c8402136",
+      "sourceName": "src/test/utils/DSInvariantTest.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "DSInvariantTest": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "DSInvariantTest.sol/DSInvariantTest.json"
+        }
+      }
+    },
+    "src/test/utils/DSTestPlus.sol": {
+      "lastModificationDate": 1657890824802,
+      "contentHash": "708d87190a5af0797ed0bfa703ad54ca",
+      "sourceName": "src/test/utils/DSTestPlus.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/solmate/lib/ds-test/src/test.sol",
+        "src/test/utils/Hevm.sol"
+      ],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "DSTestPlus": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "DSTestPlus.sol/DSTestPlus.json"
+        }
+      }
+    },
+    "src/test/utils/Hevm.sol": {
+      "lastModificationDate": 1657890824802,
+      "contentHash": "60742aa83f930a4226fbe7676f06b607",
+      "sourceName": "src/test/utils/Hevm.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "Hevm": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "Hevm.sol/Hevm.json"
+        }
+      }
+    }
+  }
+}

@@ -29,14 +29,15 @@ contract WrappedAgToken is ERC20 {
 
 
     constructor(
-    IAgToken _underlyingAgToken,
-    address _interestCollector,
-    address governanceAddress,
     string memory tokenName,
-    string memory tokenSymbol
-  ) ERC20(tokenName, tokenSymbol, 18) {
+    string memory tokenSymbol,
+    uint8 tokenDecimals,
+    address _underlyingAgToken,
+    address _interestCollector,
+    address governanceAddress
+  ) ERC20(tokenName, tokenSymbol, tokenDecimals) {
     interestCollector = _interestCollector;
-    underlyingAgToken = _underlyingAgToken;
+    underlyingAgToken = IAgToken(_underlyingAgToken);
     POOL = ILendingPool(underlyingAgToken.POOL());
     reserveAsset = underlyingAgToken.UNDERLYING_ASSET_ADDRESS();
     manager = governanceAddress;
