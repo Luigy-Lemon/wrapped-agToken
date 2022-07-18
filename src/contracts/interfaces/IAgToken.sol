@@ -3,6 +3,7 @@ pragma solidity >=0.8.0;
 
 import {IERC20} from "./IERC20.sol";
 import {IScaledBalanceToken} from "./IScaledBalanceToken.sol";
+import {ILendingPool} from "./ILendingPool.sol";
 
 interface IAgToken is IERC20, IScaledBalanceToken {
     /**
@@ -15,7 +16,7 @@ interface IAgToken is IERC20, IScaledBalanceToken {
     event Mint(address indexed from, uint256 value, uint256 index);
 
 
-    function POOL() external returns (address);
+    function POOL() external returns (ILendingPool);
 
     function UNDERLYING_ASSET_ADDRESS() external returns (address);
 

@@ -1,0 +1,653 @@
+{
+	"compiler": {
+		"version": "0.8.14+commit.80d49f37"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "BalanceTransfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "target",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "Burn",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "Mint",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "POOL",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "UNDERLYING_ASSET_ADDRESS",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "receiverOfUnderlying",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "burn",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getScaledUserBalanceAndSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "mint",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "mintToTreasury",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "scaledBalanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "scaledTotalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "transferOnLiquidation",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferUnderlyingTo",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"events": {
+				"BalanceTransfer(address,address,uint256,uint256)": {
+					"details": "Emitted during the transfer action",
+					"params": {
+						"from": "The user whose tokens are being transferred",
+						"index": "The new liquidity index of the reserve",
+						"to": "The recipient",
+						"value": "The amount being transferred"
+					}
+				},
+				"Burn(address,address,uint256,uint256)": {
+					"details": "Emitted after agTokens are burned",
+					"params": {
+						"from": "The owner of the agTokens, getting them burned",
+						"index": "The new liquidity index of the reserve",
+						"target": "The address that will receive the underlying",
+						"value": "The amount being burned"
+					}
+				},
+				"Mint(address,uint256,uint256)": {
+					"details": "Emitted after the mint action",
+					"params": {
+						"from": "The address performing the mint",
+						"index": "The new liquidity index of the reserve",
+						"value": "The amount being"
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"allowance(address,address)": {
+					"details": "Returns the remaining number of tokens that `spender` will be allowed to spend on behalf of `owner` through {transferFrom}. This is zero by default. This value changes when {approve} or {transferFrom} are called."
+				},
+				"approve(address,uint256)": {
+					"details": "Sets `amount` as the allowance of `spender` over the caller's tokens. Returns a boolean value indicating whether the operation succeeded. IMPORTANT: Beware that changing an allowance with this method brings the risk that someone may use both the old and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this race condition is to first reduce the spender's allowance to 0 and set the desired value afterwards: https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729 Emits an {Approval} event."
+				},
+				"balanceOf(address)": {
+					"details": "Returns the amount of tokens owned by `account`."
+				},
+				"burn(address,address,uint256,uint256)": {
+					"details": "Burns agTokens from `user` and sends the equivalent amount of underlying to `receiverOfUnderlying`",
+					"params": {
+						"amount": "The amount being burned",
+						"index": "The new liquidity index of the reserve",
+						"receiverOfUnderlying": "The address that will receive the underlying",
+						"user": "The owner of the agTokens, getting them burned"
+					}
+				},
+				"getScaledUserBalanceAndSupply(address)": {
+					"details": "Returns the scaled balance of the user and the scaled total supply.",
+					"params": {
+						"user": "The address of the user"
+					},
+					"returns": {
+						"_0": "The scaled balance of the user",
+						"_1": "The scaled balance and the scaled total supply*"
+					}
+				},
+				"mint(address,uint256,uint256)": {
+					"details": "Mints `amount` agTokens to `user`",
+					"params": {
+						"amount": "The amount of tokens getting minted",
+						"index": "The new liquidity index of the reserve",
+						"user": "The address receiving the minted tokens"
+					},
+					"returns": {
+						"_0": "`true` if the the previous balance of the user was 0"
+					}
+				},
+				"mintToTreasury(uint256,uint256)": {
+					"details": "Mints agTokens to the reserve treasury",
+					"params": {
+						"amount": "The amount of tokens getting minted",
+						"index": "The new liquidity index of the reserve"
+					}
+				},
+				"scaledBalanceOf(address)": {
+					"details": "Returns the scaled balance of the user. The scaled balance is the sum of all the updated stored balance divided by the reserve's liquidity index at the moment of the update",
+					"params": {
+						"user": "The user whose balance is calculated"
+					},
+					"returns": {
+						"_0": "The scaled balance of the user*"
+					}
+				},
+				"scaledTotalSupply()": {
+					"details": "Returns the scaled total supply of the variable debt token. Represents sum(debt/index)",
+					"returns": {
+						"_0": "The scaled total supply*"
+					}
+				},
+				"totalSupply()": {
+					"details": "Returns the amount of tokens in existence."
+				},
+				"transfer(address,uint256)": {
+					"details": "Moves `amount` tokens from the caller's account to `recipient`. Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event."
+				},
+				"transferFrom(address,address,uint256)": {
+					"details": "Moves `amount` tokens from `sender` to `recipient` using the allowance mechanism. `amount` is then deducted from the caller's allowance. Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event."
+				},
+				"transferOnLiquidation(address,address,uint256)": {
+					"details": "Transfers agTokens in the event of a borrow being liquidated, in case the liquidators reclaims the agToken",
+					"params": {
+						"from": "The address getting liquidated, current owner of the agTokens",
+						"to": "The recipient",
+						"value": "The amount of tokens getting transferred"
+					}
+				},
+				"transferUnderlyingTo(address,uint256)": {
+					"details": "Transfers the underlying asset to `target`. Used by the LendingPool to transfer assets in borrow(), withdraw() and flashLoan()",
+					"params": {
+						"amount": "The amount getting transferred",
+						"user": "The recipient of the agTokens"
+					},
+					"returns": {
+						"_0": "The amount transferred"
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"src/contracts/interfaces/IAgToken.sol": "IAgToken"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"src/contracts/interfaces/IAgToken.sol": {
+			"keccak256": "0x2c64ea2ccfac98dae66df640520312af55dc1093b9ea83f10212f2eb2efad64a",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://67f993d4b16b4aa9c0f5b99adaec2f6e0375f7c613479be7350d2c4cd50cad7e",
+				"dweb:/ipfs/QmZCgiq1K2eVAUwwtd6DcRkxbadPFwT2wMJ8trLQCnjdPF"
+			]
+		},
+		"src/contracts/interfaces/IERC20.sol": {
+			"keccak256": "0x60bd705c014fde097f648071600f1094f1316bb94a6eadda7f2e5065e02377c6",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://5e43358a9badd8b0fdbe243c5b8936d76bf06b8d98b8b0a93f49fad1db96aa30",
+				"dweb:/ipfs/Qma51NxbPTPAEVSHDBEhLmCUsZfdt3o4DwSpY5nYoRV9dH"
+			]
+		},
+		"src/contracts/interfaces/IScaledBalanceToken.sol": {
+			"keccak256": "0x35b5c20f614c624ff4fdaf6f2702b25f106c6bd656d51179a4bd5be39a533bca",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://327594d146f56f3acad9539567e7bf7f97a9fb6491dc8bcf577ca3abe33be292",
+				"dweb:/ipfs/QmS5SM5BY9eB68TEfEURZiutMWPwZ1M21P6BTbFC7XqfAs"
+			]
+		}
+	},
+	"version": 1
+}

@@ -3,11 +3,12 @@ pragma solidity >=0.8.0;
 
 import {DSTestPlus} from "./utils/DSTestPlus.sol";
 import {DSInvariantTest} from "./utils/DSInvariantTest.sol";
+import "forge-std/console.sol";
 
 
 import {WrappedAgToken} from "../contracts/WrappedAgToken.sol";
 
-contract ERC20Test is DSTestPlus {
+contract WrappedAgTokenTest is DSTestPlus {
     WrappedAgToken token;
 
     bytes32 constant PERMIT_TYPEHASH =
@@ -34,68 +35,71 @@ contract ERC20Test is DSTestPlus {
     }
 
     function testDeposit() public {
-        token.deposit(1e18);
+        uint256 balance = token.underlyingAgToken().balanceOf(msg.sender);
+        console.log(balance);
+        token.underlyingAgToken().approve(address(this), type(uint256).max);
+        token.deposit(1e6);
 
-        assertEq(token.totalSupply(), 1e18);
-        assertEq(token.balanceOf(address(0xBEEF)), 1e18);
+        assertEq(token.totalSupply(), 1e6);
+        assertEq(token.balanceOf(msg.sender), 1e6);
     }
 
     function testWithdraw() public {
-        token.deposit( 1e18);
-        token.withdraw( 0.9e18);
+        token.deposit( 1e6);
+        token.withdraw( 0.9e6);
 
-        assertEq(token.totalSupply(), 1e18 - 0.9e18);
-        assertEq(token.balanceOf(address(0xBEEF)), 0.1e18);
+        assertEq(token.totalSupply(), 1e6 - 0.9e6);
+        assertEq(token.balanceOf(address(0xBEEF)), 0.1e6);
     }
 
     function testApprove() public {
-        assertTrue(token.approve(address(0xBEEF), 1e18));
+        assertTrue(token.approve(address(0xBEEF), 1e6));
 
-        assertEq(token.allowance(address(this), address(0xBEEF)), 1e18);
+        assertEq(token.allowance(address(this), address(0xBEEF)), 1e6);
     }
 
     function testTransfer() public {
-        token.deposit( 1e18);
+        token.deposit( 1e6);
 
-        assertTrue(token.transfer(address(0xBEEF), 1e18));
-        assertEq(token.totalSupply(), 1e18);
+        assertTrue(token.transfer(address(0xBEEF), 1e6));
+        assertEq(token.totalSupply(), 1e6);
 
         assertEq(token.balanceOf(address(this)), 0);
-        assertEq(token.balanceOf(address(0xBEEF)), 1e18);
+        assertEq(token.balanceOf(address(0xBEEF)), 1e6);
     }
 
     function testTransferFrom() public {
         address from = address(0xABCD);
 
-        token.deposit( 1e18);
+        token.deposit( 1e6);
 
         hevm.prank(from);
-        token.approve(address(this), 1e18);
+        token.approve(address(this), 1e6);
 
-        assertTrue(token.transferFrom(from, address(0xBEEF), 1e18));
-        assertEq(token.totalSupply(), 1e18);
+        assertTrue(token.transferFrom(from, address(0xBEEF), 1e6));
+        assertEq(token.totalSupply(), 1e6);
 
         assertEq(token.allowance(from, address(this)), 0);
 
         assertEq(token.balanceOf(from), 0);
-        assertEq(token.balanceOf(address(0xBEEF)), 1e18);
+        assertEq(token.balanceOf(address(0xBEEF)), 1e6);
     }
 
     function testInfiniteApproveTransferFrom() public {
         address from = address(0xABCD);
 
-        token.deposit( 1e18);
+        token.deposit( 1e6);
 
         hevm.prank(from);
         token.approve(address(this), type(uint256).max);
 
-        assertTrue(token.transferFrom(from, address(0xBEEF), 1e18));
-        assertEq(token.totalSupply(), 1e18);
+        assertTrue(token.transferFrom(from, address(0xBEEF), 1e6));
+        assertEq(token.totalSupply(), 1e6);
 
         assertEq(token.allowance(from, address(this)), type(uint256).max);
 
         assertEq(token.balanceOf(from), 0);
-        assertEq(token.balanceOf(address(0xBEEF)), 1e18);
+        assertEq(token.balanceOf(address(0xBEEF)), 1e6);
     }
 
     function testPermit() public {
@@ -108,42 +112,42 @@ contract ERC20Test is DSTestPlus {
                 abi.encodePacked(
                     "\x19\x01",
                     token.DOMAIN_SEPARATOR(),
-                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, address(0xCAFE), 1e18, 0, block.timestamp))
+                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, address(0xCAFE), 1e6, 0, block.timestamp))
                 )
             )
         );
 
-        token.permit(owner, address(0xCAFE), 1e18, block.timestamp, v, r, s);
+        token.permit(owner, address(0xCAFE), 1e6, block.timestamp, v, r, s);
 
-        assertEq(token.allowance(owner, address(0xCAFE)), 1e18);
+        assertEq(token.allowance(owner, address(0xCAFE)), 1e6);
         assertEq(token.nonces(owner), 1);
     }
 
     function testFailTransferInsufficientBalance() public {
-        token.deposit( 0.9e18);
-        token.transfer(address(0xBEEF), 1e18);
+        token.deposit( 0.9e6);
+        token.transfer(address(0xBEEF), 1e6);
     }
 
     function testFailTransferFromInsufficientAllowance() public {
         address from = address(0xABCD);
 
-        token.deposit( 1e18);
+        token.deposit( 1e6);
 
         hevm.prank(from);
-        token.approve(address(this), 0.9e18);
+        token.approve(address(this), 0.9e6);
 
-        token.transferFrom(from, address(0xBEEF), 1e18);
+        token.transferFrom(from, address(0xBEEF), 1e6);
     }
 
     function testFailTransferFromInsufficientBalance() public {
         address from = address(0xABCD);
 
-        token.deposit( 0.9e18);
+        token.deposit( 0.9e6);
 
         hevm.prank(from);
-        token.approve(address(this), 1e18);
+        token.approve(address(this), 1e6);
 
-        token.transferFrom(from, address(0xBEEF), 1e18);
+        token.transferFrom(from, address(0xBEEF), 1e6);
     }
 
     function testFailPermitBadNonce() public {
@@ -156,12 +160,12 @@ contract ERC20Test is DSTestPlus {
                 abi.encodePacked(
                     "\x19\x01",
                     token.DOMAIN_SEPARATOR(),
-                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, address(0xCAFE), 1e18, 1, block.timestamp))
+                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, address(0xCAFE), 1e6, 1, block.timestamp))
                 )
             )
         );
 
-        token.permit(owner, address(0xCAFE), 1e18, block.timestamp, v, r, s);
+        token.permit(owner, address(0xCAFE), 1e6, block.timestamp, v, r, s);
     }
 
     function testFailPermitBadDeadline() public {
@@ -174,12 +178,12 @@ contract ERC20Test is DSTestPlus {
                 abi.encodePacked(
                     "\x19\x01",
                     token.DOMAIN_SEPARATOR(),
-                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, address(0xCAFE), 1e18, 0, block.timestamp))
+                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, address(0xCAFE), 1e6, 0, block.timestamp))
                 )
             )
         );
 
-        token.permit(owner, address(0xCAFE), 1e18, block.timestamp + 1, v, r, s);
+        token.permit(owner, address(0xCAFE), 1e6, block.timestamp + 1, v, r, s);
     }
 
     function testFailPermitPastDeadline() public {
@@ -192,12 +196,12 @@ contract ERC20Test is DSTestPlus {
                 abi.encodePacked(
                     "\x19\x01",
                     token.DOMAIN_SEPARATOR(),
-                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, address(0xCAFE), 1e18, 0, block.timestamp - 1))
+                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, address(0xCAFE), 1e6, 0, block.timestamp - 1))
                 )
             )
         );
 
-        token.permit(owner, address(0xCAFE), 1e18, block.timestamp - 1, v, r, s);
+        token.permit(owner, address(0xCAFE), 1e6, block.timestamp - 1, v, r, s);
     }
 
     function testFailPermitReplay() public {
@@ -210,13 +214,13 @@ contract ERC20Test is DSTestPlus {
                 abi.encodePacked(
                     "\x19\x01",
                     token.DOMAIN_SEPARATOR(),
-                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, address(0xCAFE), 1e18, 0, block.timestamp))
+                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, address(0xCAFE), 1e6, 0, block.timestamp))
                 )
             )
         );
 
-        token.permit(owner, address(0xCAFE), 1e18, block.timestamp, v, r, s);
-        token.permit(owner, address(0xCAFE), 1e18, block.timestamp, v, r, s);
+        token.permit(owner, address(0xCAFE), 1e6, block.timestamp, v, r, s);
+        token.permit(owner, address(0xCAFE), 1e6, block.timestamp, v, r, s);
     }
 
     function testMetadata(

@@ -1,0 +1,616 @@
+{
+	"compiler": {
+		"version": "0.8.14+commit.80d49f37"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "tokenName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "tokenSymbol",
+						"type": "string"
+					},
+					{
+						"internalType": "uint8",
+						"name": "tokenDecimals",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address",
+						"name": "_underlyingAgToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_interestCollector",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "governanceAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Claimed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Deposit",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Withdrawal",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "DOMAIN_SEPARATOR",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "POOL",
+				"outputs": [
+					{
+						"internalType": "contract ILendingPool",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "claim",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "decimals",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "interestCollector",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "manager",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "nonces",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "deadline",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "v",
+						"type": "uint8"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "r",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "s",
+						"type": "bytes32"
+					}
+				],
+				"name": "permit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "reserveAsset",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newCollector",
+						"type": "address"
+					}
+				],
+				"name": "setInterestCollector",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newManager",
+						"type": "address"
+					}
+				],
+				"name": "setManager",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "underlyingAgToken",
+				"outputs": [
+					{
+						"internalType": "contract IAgToken",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"author": "Luigy-Lemon (https://github.com/Rari-Capital/solmate/blob/main/src/tokens/WETH.sol)Inspired by Solmate WETH (https://github.com/Rari-Capital/solmate/blob/main/src/tokens/WETH.sol)",
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"notice": "Wrapped AgToken (ERC-20) implementation.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"src/contracts/WrappedAgToken.sol": "WrappedAgToken"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"lib/solmate/src/tokens/ERC20.sol": {
+			"keccak256": "0x0240f7703cff32a61ee3e9fbb339e09a944260432a9ef37debf3692b1a6c8049",
+			"license": "AGPL-3.0-only",
+			"urls": [
+				"bzz-raw://2d8b0c0158b1952a87c327d506a645040924a94c8f9f937184659f8a8e3b0759",
+				"dweb:/ipfs/QmZ9rGdkjRCk8zfr4xeH7Jh88tkWJNt9LvG1o2GcCm7Uqa"
+			]
+		},
+		"src/contracts/WrappedAgToken.sol": {
+			"keccak256": "0x94be694f7cbbffa0e0d0b31af19e65285dcba9baf115523958519ff854bdf82e",
+			"license": "AGPL-3.0-only",
+			"urls": [
+				"bzz-raw://b189d6d3a4d19c96f3b0fe20211581a53178d5ce1369939034223b03f9a6258d",
+				"dweb:/ipfs/QmatTPWGXQ661ijqFmrFCYJ7znD1YXGq6bZraPkBpYfdX9"
+			]
+		},
+		"src/contracts/interfaces/IAgToken.sol": {
+			"keccak256": "0x2c64ea2ccfac98dae66df640520312af55dc1093b9ea83f10212f2eb2efad64a",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://67f993d4b16b4aa9c0f5b99adaec2f6e0375f7c613479be7350d2c4cd50cad7e",
+				"dweb:/ipfs/QmZCgiq1K2eVAUwwtd6DcRkxbadPFwT2wMJ8trLQCnjdPF"
+			]
+		},
+		"src/contracts/interfaces/IERC20.sol": {
+			"keccak256": "0x60bd705c014fde097f648071600f1094f1316bb94a6eadda7f2e5065e02377c6",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://5e43358a9badd8b0fdbe243c5b8936d76bf06b8d98b8b0a93f49fad1db96aa30",
+				"dweb:/ipfs/Qma51NxbPTPAEVSHDBEhLmCUsZfdt3o4DwSpY5nYoRV9dH"
+			]
+		},
+		"src/contracts/interfaces/ILendingPool.sol": {
+			"keccak256": "0x87deb49d72c05ff864bb4b666609dfe6d35a7ede37bdcb9cc19aba88103a6900",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://0de8c1d2afbedd2f9509f7feb6f7daa032ed54115c1a61cee540a6327188b9bc",
+				"dweb:/ipfs/QmQCLDEiVMJpqtN3PL2Jk3F82gy2qc6Q5vaQEHNLGvXZMh"
+			]
+		},
+		"src/contracts/interfaces/ILendingPoolAddressesProvider.sol": {
+			"keccak256": "0x522d6f0a7184c79c5adf3a2432e3e956879dfc982389fc616475ed32c95f6f6c",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://d7c88f1cacddcf308a84ef83b6d3e4b6b42c73b76c8737120e2e4044b56087ea",
+				"dweb:/ipfs/QmZsSBTK5HTDTzPcp5RPoR1LRCUSEh6L7Cjh7VNDcG54QF"
+			]
+		},
+		"src/contracts/interfaces/IScaledBalanceToken.sol": {
+			"keccak256": "0x35b5c20f614c624ff4fdaf6f2702b25f106c6bd656d51179a4bd5be39a533bca",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://327594d146f56f3acad9539567e7bf7f97a9fb6491dc8bcf577ca3abe33be292",
+				"dweb:/ipfs/QmS5SM5BY9eB68TEfEURZiutMWPwZ1M21P6BTbFC7XqfAs"
+			]
+		},
+		"src/contracts/types/DataTypes.sol": {
+			"keccak256": "0x7befb345e4a3b97ed864c428a4252dbc352709788c623cf1c9923e0a5168f832",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://a698b03d3bcbe396fe1e332943e08437c8ffbee6386bb837d4335d724f2a4c89",
+				"dweb:/ipfs/QmXZ2waAnzE4Y1eLLStKMsT4qzoPUsSBLp2pw18wcrWyMU"
+			]
+		}
+	},
+	"version": 1
+}

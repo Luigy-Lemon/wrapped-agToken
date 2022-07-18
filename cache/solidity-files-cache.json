@@ -88,8 +88,8 @@
       }
     },
     "src/contracts/WrappedAgToken.sol": {
-      "lastModificationDate": 1657907066672,
-      "contentHash": "db0d7735b72c51fcd16c0453627a16fb",
+      "lastModificationDate": 1658139178790,
+      "contentHash": "4e7b262bc6c101fd3ad4c7269a1342b6",
       "sourceName": "src/contracts/WrappedAgToken.sol",
       "solcConfig": {
         "settings": {
@@ -134,8 +134,8 @@
       }
     },
     "src/contracts/interfaces/IAgToken.sol": {
-      "lastModificationDate": 1657719051049,
-      "contentHash": "5ab118671eed27137ab844643616c574",
+      "lastModificationDate": 1658139100320,
+      "contentHash": "cfa8878382bd1889c277e97a1205e9ea",
       "sourceName": "src/contracts/interfaces/IAgToken.sol",
       "solcConfig": {
         "settings": {
@@ -165,7 +165,10 @@
       },
       "imports": [
         "src/contracts/interfaces/IERC20.sol",
-        "src/contracts/interfaces/IScaledBalanceToken.sol"
+        "src/contracts/interfaces/ILendingPool.sol",
+        "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
+        "src/contracts/interfaces/IScaledBalanceToken.sol",
+        "src/contracts/types/DataTypes.sol"
       ],
       "versionRequirement": ">=0.8.0",
       "artifacts": {
@@ -368,8 +371,8 @@
       }
     },
     "src/test/WrappedAgToken.t.sol": {
-      "lastModificationDate": 1657907845592,
-      "contentHash": "a63ae5d7c4cc1145bd4d7f2963d78c86",
+      "lastModificationDate": 1658142516660,
+      "contentHash": "25b224d3e30ef8d55fa16918989c29fd",
       "sourceName": "src/test/WrappedAgToken.t.sol",
       "solcConfig": {
         "settings": {
@@ -419,8 +422,8 @@
         "ERC20Invariants": {
           "0.8.14+commit.80d49f37.Linux.gcc": "WrappedAgToken.t.sol/ERC20Invariants.json"
         },
-        "ERC20Test": {
-          "0.8.14+commit.80d49f37.Linux.gcc": "WrappedAgToken.t.sol/ERC20Test.json"
+        "WrappedAgTokenTest": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "WrappedAgToken.t.sol/WrappedAgTokenTest.json"
         }
       }
     },

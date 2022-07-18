@@ -38,8 +38,8 @@ contract WrappedAgToken is ERC20 {
   ) ERC20(tokenName, tokenSymbol, tokenDecimals) {
     interestCollector = _interestCollector;
     underlyingAgToken = IAgToken(_underlyingAgToken);
-    POOL = ILendingPool(underlyingAgToken.POOL());
-    reserveAsset = underlyingAgToken.UNDERLYING_ASSET_ADDRESS();
+    POOL = ILendingPool(underlyingAgToken.POOL.address);
+    reserveAsset = underlyingAgToken.UNDERLYING_ASSET_ADDRESS.address;
     manager = governanceAddress;
   }
 
