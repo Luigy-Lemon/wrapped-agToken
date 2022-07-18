@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.0;
 
-import {DSTestPlus} from "./utils/DSTestPlus.sol";
-import {DSInvariantTest} from "./utils/DSInvariantTest.sol";
-import "forge-std/console.sol";
+import "forge-std/Test.sol";
+import "forge-std/console2.sol";
+import {IAgToken} from "../contracts/interfaces/IAgToken.sol";
 
 
 import {WrappedAgToken} from "../contracts/WrappedAgToken.sol";
 
-contract WrappedAgTokenTest is DSTestPlus {
+contract WrappedAgTokenTest is Test {
     WrappedAgToken token;
 
     bytes32 constant PERMIT_TYPEHASH =
@@ -34,10 +34,16 @@ contract WrappedAgTokenTest is DSTestPlus {
         assertEq(token.manager(), 0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A);
     }
 
+
     function testDeposit() public {
         uint256 balance = token.underlyingAgToken().balanceOf(msg.sender);
-        console.log(balance);
-        token.underlyingAgToken().approve(address(this), type(uint256).max);
+        console2.log("agToken balance:", balance);
+        address undAddress = address(token.underlyingAgToken());
+        (bool success,) = undAddress.call(abi.encodeWithSignature("approve(address,uint256)", address(this), type(uint256).max)
+    );  
+        assertTrue(success);
+        console2.log("msg.sender", token.underlyingAgToken().allowance(msg.sender, address(this)));
+        console2.log("testContract", token.underlyingAgToken().allowance(address(this), address(this)));
         token.deposit(1e6);
 
         assertEq(token.totalSupply(), 1e6);
@@ -73,7 +79,7 @@ contract WrappedAgTokenTest is DSTestPlus {
 
         token.deposit( 1e6);
 
-        hevm.prank(from);
+        vm.prank(from);
         token.approve(address(this), 1e6);
 
         assertTrue(token.transferFrom(from, address(0xBEEF), 1e6));
@@ -84,13 +90,13 @@ contract WrappedAgTokenTest is DSTestPlus {
         assertEq(token.balanceOf(from), 0);
         assertEq(token.balanceOf(address(0xBEEF)), 1e6);
     }
-
+    /*
     function testInfiniteApproveTransferFrom() public {
         address from = address(0xABCD);
 
         token.deposit( 1e6);
 
-        hevm.prank(from);
+        vm.prank(from);
         token.approve(address(this), type(uint256).max);
 
         assertTrue(token.transferFrom(from, address(0xBEEF), 1e6));
@@ -104,9 +110,9 @@ contract WrappedAgTokenTest is DSTestPlus {
 
     function testPermit() public {
         uint256 privateKey = 0xBEEF;
-        address owner = hevm.addr(privateKey);
+        address owner = vm.addr(privateKey);
 
-        (uint8 v, bytes32 r, bytes32 s) = hevm.sign(
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             privateKey,
             keccak256(
                 abi.encodePacked(
@@ -133,7 +139,7 @@ contract WrappedAgTokenTest is DSTestPlus {
 
         token.deposit( 1e6);
 
-        hevm.prank(from);
+        vm.prank(from);
         token.approve(address(this), 0.9e6);
 
         token.transferFrom(from, address(0xBEEF), 1e6);
@@ -144,7 +150,7 @@ contract WrappedAgTokenTest is DSTestPlus {
 
         token.deposit( 0.9e6);
 
-        hevm.prank(from);
+        vm.prank(from);
         token.approve(address(this), 1e6);
 
         token.transferFrom(from, address(0xBEEF), 1e6);
@@ -152,9 +158,9 @@ contract WrappedAgTokenTest is DSTestPlus {
 
     function testFailPermitBadNonce() public {
         uint256 privateKey = 0xBEEF;
-        address owner = hevm.addr(privateKey);
+        address owner = vm.addr(privateKey);
 
-        (uint8 v, bytes32 r, bytes32 s) = hevm.sign(
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             privateKey,
             keccak256(
                 abi.encodePacked(
@@ -170,9 +176,9 @@ contract WrappedAgTokenTest is DSTestPlus {
 
     function testFailPermitBadDeadline() public {
         uint256 privateKey = 0xBEEF;
-        address owner = hevm.addr(privateKey);
+        address owner = vm.addr(privateKey);
 
-        (uint8 v, bytes32 r, bytes32 s) = hevm.sign(
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             privateKey,
             keccak256(
                 abi.encodePacked(
@@ -188,9 +194,9 @@ contract WrappedAgTokenTest is DSTestPlus {
 
     function testFailPermitPastDeadline() public {
         uint256 privateKey = 0xBEEF;
-        address owner = hevm.addr(privateKey);
+        address owner = vm.addr(privateKey);
 
-        (uint8 v, bytes32 r, bytes32 s) = hevm.sign(
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             privateKey,
             keccak256(
                 abi.encodePacked(
@@ -206,9 +212,9 @@ contract WrappedAgTokenTest is DSTestPlus {
 
     function testFailPermitReplay() public {
         uint256 privateKey = 0xBEEF;
-        address owner = hevm.addr(privateKey);
+        address owner = vm.addr(privateKey);
 
-        (uint8 v, bytes32 r, bytes32 s) = hevm.sign(
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             privateKey,
             keccak256(
                 abi.encodePacked(
@@ -293,7 +299,7 @@ contract WrappedAgTokenTest is DSTestPlus {
 
         token.deposit( amount);
 
-        hevm.prank(from);
+        vm.prank(from);
         token.approve(address(this), approval);
 
         assertTrue(token.transferFrom(from, to, amount));
@@ -320,9 +326,9 @@ contract WrappedAgTokenTest is DSTestPlus {
         if (deadline < block.timestamp) deadline = block.timestamp;
         if (privateKey == 0) privateKey = 1;
 
-        address owner = hevm.addr(privateKey);
+        address owner = vm.addr(privateKey);
 
-        (uint8 v, bytes32 r, bytes32 s) = hevm.sign(
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             privateKey,
             keccak256(
                 abi.encodePacked(
@@ -371,7 +377,7 @@ contract WrappedAgTokenTest is DSTestPlus {
 
         token.deposit( amount);
 
-        hevm.prank(from);
+        vm.prank(from);
         token.approve(address(this), approval);
 
         token.transferFrom(from, to, amount);
@@ -388,7 +394,7 @@ contract WrappedAgTokenTest is DSTestPlus {
 
         token.deposit( depositAmount);
 
-        hevm.prank(from);
+        vm.prank(from);
         token.approve(address(this), sendAmount);
 
         token.transferFrom(from, to, sendAmount);
@@ -405,9 +411,9 @@ contract WrappedAgTokenTest is DSTestPlus {
         if (privateKey == 0) privateKey = 1;
         if (nonce == 0) nonce = 1;
 
-        address owner = hevm.addr(privateKey);
+        address owner = vm.addr(privateKey);
 
-        (uint8 v, bytes32 r, bytes32 s) = hevm.sign(
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             privateKey,
             keccak256(
                 abi.encodePacked(
@@ -430,9 +436,9 @@ contract WrappedAgTokenTest is DSTestPlus {
         if (deadline < block.timestamp) deadline = block.timestamp;
         if (privateKey == 0) privateKey = 1;
 
-        address owner = hevm.addr(privateKey);
+        address owner = vm.addr(privateKey);
 
-        (uint8 v, bytes32 r, bytes32 s) = hevm.sign(
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             privateKey,
             keccak256(
                 abi.encodePacked(
@@ -455,9 +461,9 @@ contract WrappedAgTokenTest is DSTestPlus {
         deadline = bound(deadline, 0, block.timestamp - 1);
         if (privateKey == 0) privateKey = 1;
 
-        address owner = hevm.addr(privateKey);
+        address owner = vm.addr(privateKey);
 
-        (uint8 v, bytes32 r, bytes32 s) = hevm.sign(
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             privateKey,
             keccak256(
                 abi.encodePacked(
@@ -480,9 +486,9 @@ contract WrappedAgTokenTest is DSTestPlus {
         if (deadline < block.timestamp) deadline = block.timestamp;
         if (privateKey == 0) privateKey = 1;
 
-        address owner = hevm.addr(privateKey);
+        address owner = vm.addr(privateKey);
 
-        (uint8 v, bytes32 r, bytes32 s) = hevm.sign(
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             privateKey,
             keccak256(
                 abi.encodePacked(
@@ -496,61 +502,6 @@ contract WrappedAgTokenTest is DSTestPlus {
         token.permit(owner, to, amount, deadline, v, r, s);
         token.permit(owner, to, amount, deadline, v, r, s);
     }
+    */
 }
 
-contract ERC20Invariants is DSTestPlus, DSInvariantTest {
-    BalanceSum balanceSum;
-    WrappedAgToken token;
-
-     function setUp() public {
-        token = new WrappedAgToken(
-            "Wrapped agUSDC", 
-            "WagUSDC", 
-            6,  
-            0x291B5957c9CBe9Ca6f0b98281594b4eB495F4ec1,
-            0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A,
-            0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A
-        );
-        balanceSum = new BalanceSum(token);
-        addTargetContract(address(balanceSum));
-    }
-
-    function invariantBalanceSum() public {
-        assertEq(token.totalSupply(), balanceSum.sum());
-    }
-}
-
-contract BalanceSum {
-    WrappedAgToken token;
-    uint256 public sum;
-
-    constructor(WrappedAgToken _token) {
-        token = _token;
-    }
-
-    function deposit( uint256 amount) public {
-        token.deposit( amount);
-        sum += amount;
-    }
-
-    function withdraw( uint256 amount) public {
-        token.withdraw( amount);
-        sum -= amount;
-    }
-
-    function approve(address to, uint256 amount) public {
-        token.approve(to, amount);
-    }
-
-    function transferFrom(
-        address from,
-        address to,
-        uint256 amount
-    ) public {
-        token.transferFrom(from, to, amount);
-    }
-
-    function transfer(address to, uint256 amount) public {
-        token.transfer(to, amount);
-    }
-}
