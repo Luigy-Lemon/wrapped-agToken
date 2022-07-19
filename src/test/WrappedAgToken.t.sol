@@ -469,17 +469,31 @@ contract WrappedAgTokenTest is Test {
                         GOVERNANCE LOGIC
     //////////////////////////////////////////////////////////////*/
 
-    function testClaim() public {
+    function testClaimWithInterest() public {
         vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
                 // TESTED DEPOSIT LOGIC
         IAgToken undToken = token.underlyingAgToken();
         bool success = undToken.approve(address(token), type(uint256).max);
         assertTrue(success);
         token.deposit(10e6);
-        skip(1000);
+        skip(1000); //collect interest by skipping 1000 blocks
         uint256 collectorBalance = undToken.balanceOf(token.interestCollector());
         uint256 claimable = undToken.balanceOf(address(token)) - token.totalSupply();
         assertGt(claimable, 0);
+        token.claim();
+        assertEq(claimable, undToken.balanceOf(token.interestCollector()) - collectorBalance);
+        vm.stopPrank();
+    }
+
+    function testClaimWithoutInterest() public {
+        vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
+                // TESTED DEPOSIT LOGIC
+        IAgToken undToken = token.underlyingAgToken();
+        bool success = undToken.approve(address(token), type(uint256).max);
+        assertTrue(success);
+        token.deposit(10e6);
+        uint256 collectorBalance = undToken.balanceOf(token.interestCollector());
+        uint256 claimable = undToken.balanceOf(address(token)) - token.totalSupply();
         token.claim();
         assertEq(claimable, undToken.balanceOf(token.interestCollector()) - collectorBalance);
         vm.stopPrank();
