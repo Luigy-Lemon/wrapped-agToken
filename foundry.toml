@@ -3,13 +3,15 @@ src = 'src'
 test = 'test'                                                 
 out = 'out'                                                   
 libs = ['lib']                                                
-remappings = ['ds-test/=lib/ds-test/src/', 'forge-std/=lib/forge-std/src/']   
+remappings = ['ds-test/=lib/ds-test/src/', 'forge-std/=lib/forge-std/src/', 'solmate/=lib/solmate/src/']   
 evm_version = 'london'                                        
 #solc_version = '0.8.10'                                      
-sender = '0x1beeDEeF63d7746D5A6589B0993f92c6A832f6ba'         
-tx_origin = '0x1beeDEeF63d7746D5A6589B0993f92c6A832f6ba'      
+sender = '0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe'         
+tx_origin = '0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe'      
 initial_balance = '0xffffffffffffffffffffffff'                
 gas_limit = 9223372036854775807                               
 gas_price = 0                                                 
 block_timestamp = 0                                           
 gas_reports = ["*"]
+eth_rpc_url = 'https://poa-xdai-archival.gateway.pokt.network/v1/lb/62d707c8b37b8e0039342d87'
+verbosity = 3

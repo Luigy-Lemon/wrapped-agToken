@@ -20,7 +20,6 @@ contract WrappedAgToken is ERC20 {
 
     uint256 constant ACTIVE_MASK = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFF;
 
-    uint256 userDeposits = 0;
     address public manager;
     address public interestCollector;
     address public reserveAsset;
@@ -38,8 +37,8 @@ contract WrappedAgToken is ERC20 {
   ) ERC20(tokenName, tokenSymbol, tokenDecimals) {
     interestCollector = _interestCollector;
     underlyingAgToken = IAgToken(_underlyingAgToken);
-    POOL = ILendingPool(underlyingAgToken.POOL.address);
-    reserveAsset = underlyingAgToken.UNDERLYING_ASSET_ADDRESS.address;
+    POOL = ILendingPool(underlyingAgToken.POOL());
+    reserveAsset = underlyingAgToken.UNDERLYING_ASSET_ADDRESS();
     manager = governanceAddress;
   }
 
@@ -71,13 +70,10 @@ contract WrappedAgToken is ERC20 {
 
         _mint(msg.sender, amount);
 
-        userDeposits += amount;
-
         emit Deposit(msg.sender, amount);
     }
 
     function withdraw(uint256 amount) public {
-        userDeposits -= amount;
         
         _burn(msg.sender, amount);
 
@@ -93,7 +89,7 @@ contract WrappedAgToken is ERC20 {
     //////////////////////////////////////////////////////////////*/
 
     function claim() public {
-        uint256 claimable = totalSupply - userDeposits;
+        uint256 claimable = underlyingAgToken.balanceOf(address(this)) - totalSupply;
 
         underlyingAgToken.transfer(interestCollector, claimable);
 
