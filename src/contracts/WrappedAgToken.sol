@@ -18,14 +18,19 @@ contract WrappedAgToken is ERC20 {
 
     event Claimed(uint256 amount);
 
+    event ManagerChanged(address indexed newManager);
+
+    event CollectorChanged(address indexed newCollector);
+
+
     uint256 constant ACTIVE_MASK = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFF;
 
+    address immutable factory;
     address public manager;
     address public interestCollector;
     address public reserveAsset;
     IAgToken public immutable underlyingAgToken;
     ILendingPool public immutable POOL;
-
 
     constructor(
     string memory tokenName,
@@ -40,6 +45,7 @@ contract WrappedAgToken is ERC20 {
     POOL = ILendingPool(underlyingAgToken.POOL());
     reserveAsset = underlyingAgToken.UNDERLYING_ASSET_ADDRESS();
     manager = governanceAddress;
+    factory = address(msg.sender);
   }
 
     /*//////////////////////////////////////////////////////////////
@@ -47,8 +53,7 @@ contract WrappedAgToken is ERC20 {
     //////////////////////////////////////////////////////////////*/
 
     modifier isManager {
-        require(msg.sender == manager, "UNAUTHORIZED");
-
+        require(msg.sender == manager ||msg.sender == factory, "UNAUTHORIZED");
         _;
     }
 
@@ -77,7 +82,6 @@ contract WrappedAgToken is ERC20 {
         
         _burn(msg.sender, amount);
 
-
         underlyingAgToken.transfer(msg.sender, amount);
 
         emit Withdrawal(msg.sender, amount);
@@ -92,20 +96,33 @@ contract WrappedAgToken is ERC20 {
         uint256 claimable = underlyingAgToken.balanceOf(address(this)) - totalSupply;
 
         underlyingAgToken.transfer(interestCollector, claimable);
+        
+        require(underlyingAgToken.balanceOf(address(this)) == totalSupply, "Validation failed");
 
         emit Claimed(claimable);
+    }
+
+    function transferERC20Token(address token) public returns(bool){
+        require(token != address(underlyingAgToken));
+        ERC20 asset = ERC20(token);
+        uint256 balance = asset.balanceOf(address(this));
+        return asset.transfer(interestCollector, balance);
     }
 
 
     function setInterestCollector(address newCollector) external isManager() {
         interestCollector = newCollector;
+        emit CollectorChanged(newCollector);
+
     }
 
     function setManager(address newManager) external isManager() {
         manager = newManager;
+        emit ManagerChanged(newManager);
+
     }
 
     receive() external payable {
-        require(msg.value < 0, "Contract can only handle ERC20 tokens");
+        revert("Contract can only handle ERC20 tokens");
     }
 }

@@ -1,17 +1,26 @@
 [default]
-src = 'src'                                                   
-test = 'test'                                                 
+src = 'src/contracts/'                                                   
+test = 'src/test'                                                 
 out = 'out'                                                   
 libs = ['lib']                                                
 remappings = ['ds-test/=lib/ds-test/src/', 'forge-std/=lib/forge-std/src/', 'solmate/=lib/solmate/src/']   
-evm_version = 'london'                                        
-#solc_version = '0.8.10'                                      
+evm_version = 'berlin'                                        
+solc_version = '0.8.14'                                      
 sender = '0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe'         
 tx_origin = '0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe'      
 initial_balance = '0xffffffffffffffffffffffff'                
-gas_limit = 9223372036854775807                               
+gas_limit = 9223372036854775800                               
 gas_price = 0                                                 
 block_timestamp = 0                                           
 gas_reports = ["*"]
 eth_rpc_url = 'https://poa-xdai-archival.gateway.pokt.network/v1/lb/62d707c8b37b8e0039342d87'
 verbosity = 3
+
+[default.optimizer_details]
+constantOptimizer = true
+yul = true
+
+[default.optimizer_details.yulDetails]
+stackAllocation = true
+optimizerSteps = 'dhfoDgvulfnTUtnIf'
+optimizer_runs = 10000 

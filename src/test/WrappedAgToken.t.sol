@@ -4,6 +4,7 @@ pragma solidity >=0.8.0;
 import "forge-std/Test.sol";
 import "forge-std/console2.sol";
 import {IAgToken} from "../contracts/interfaces/IAgToken.sol";
+import {IERC20} from "../contracts/interfaces/IERC20.sol";
 import {DataTypes} from "../contracts/types/DataTypes.sol";
 import {WrappedAgToken} from "../contracts/WrappedAgToken.sol";
 import {ILendingPool} from "../contracts/interfaces/ILendingPool.sol";
@@ -24,7 +25,10 @@ contract WrappedAgTokenTest is Test {
             0xbad2BEE000000000000000000000000000000000,
             0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A // Agave Treasury
         );
-        IAgToken(0x291B5957c9CBe9Ca6f0b98281594b4eB495F4ec1).transfer(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe, 100e6);
+        IAgToken(0x291B5957c9CBe9Ca6f0b98281594b4eB495F4ec1).transfer(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe, 100e6); //agToken sample
+        vm.stopPrank();
+        vm.startPrank(0x6626528DE0c75Ccc7A0d24F2D24b99060f74EdEe);
+        IERC20(0x870Bb2C024513B5c9A69894dCc65fB5c47e422f3).transfer(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe, 100e18); //rewardToken
         vm.stopPrank();
     }
 
@@ -43,14 +47,14 @@ contract WrappedAgTokenTest is Test {
         vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
         address reserve = token.reserveAsset();
         ILendingPool pool = token.POOL();
-        console2.log(reserve, address(pool) );
         DataTypes.ReserveConfigurationMap memory config = pool.getConfiguration(reserve);
-        console2.log(config.data , ~ACTIVE_MASK );
         assertGt((config.data & ~ACTIVE_MASK) , 0);
 
         vm.stopPrank();
     
     }
+
+    //TODO: Test with an asset that is now Active
 
     function testIsManager() public {
         vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
@@ -62,8 +66,7 @@ contract WrappedAgTokenTest is Test {
         vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
         
         uint256 balance = token.underlyingAgToken().balanceOf(msg.sender);
-        console2.log("agToken balance:", balance);
-
+        assertGe(balance, 100e6);
         IAgToken undToken = token.underlyingAgToken();
         bool success = undToken.approve(address(token), type(uint256).max);
         assertTrue(success);
@@ -71,6 +74,7 @@ contract WrappedAgTokenTest is Test {
         token.deposit(100e6);
         assertEq(token.totalSupply(), 100e6);
         assertEq(token.balanceOf(msg.sender), 100e6);
+        assertEq(token.underlyingAgToken().balanceOf(msg.sender), balance - 100e6);
         vm.stopPrank();
     }
 
@@ -496,6 +500,35 @@ contract WrappedAgTokenTest is Test {
         uint256 claimable = undToken.balanceOf(address(token)) - token.totalSupply();
         token.claim();
         assertEq(claimable, undToken.balanceOf(token.interestCollector()) - collectorBalance);
+        vm.stopPrank();
+    }
+
+    function testTransferERC20Token() public {
+        vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
+                // TESTED DEPOSIT LOGIC
+        IERC20 rewardToken = IERC20(0x870Bb2C024513B5c9A69894dCc65fB5c47e422f3);
+        bool success = rewardToken.approve(address(token), type(uint256).max);
+        assertTrue(success);
+        rewardToken.transfer(address(token), 10e18);
+        assertEq(rewardToken.balanceOf(address(token)), 10e18);
+
+        success = token.transferERC20Token(address(rewardToken));
+        assertTrue(success);
+        assertEq(rewardToken.balanceOf(address(token)), 0);
+        vm.stopPrank();
+    }
+
+    function testFailTransferERC20Token_transferUnderlying() public {
+        vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
+                // TESTED DEPOSIT LOGIC
+        IAgToken undToken = token.underlyingAgToken();
+        bool success = undToken.approve(address(token), type(uint256).max);
+        assertTrue(success);
+        token.deposit(10e6);
+        assertEq(undToken.balanceOf(address(token)), 10e6);
+        success = token.transferERC20Token(address(undToken));
+        assertTrue(success);
+        assertEq(undToken.balanceOf(address(token)), 0);
         vm.stopPrank();
     }
 

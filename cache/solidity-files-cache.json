@@ -3,8 +3,8 @@
   "paths": {
     "artifacts": "out",
     "build_infos": "out/build-info",
-    "sources": "src",
-    "tests": "test",
+    "sources": "src/contracts",
+    "tests": "src/test",
     "scripts": "script",
     "libraries": [
       "lib"
@@ -12,14 +12,22 @@
   },
   "files": {
     "lib/ds-test/src/test.sol": {
-      "lastModificationDate": 1658151431660,
+      "lastModificationDate": 1658181111957,
       "contentHash": "962996f0e05d5218857a538a62d7c47e",
       "sourceName": "lib/ds-test/src/test.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -37,7 +45,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -50,14 +58,22 @@
       }
     },
     "lib/forge-std/src/Script.sol": {
-      "lastModificationDate": 1658181123467,
-      "contentHash": "cecdf5bf1f7e0552d19c1289e0368010",
+      "lastModificationDate": 1658863047445,
+      "contentHash": "b313d0193442f5a12848be9c422a0064",
       "sourceName": "lib/forge-std/src/Script.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -75,7 +91,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -92,14 +108,22 @@
       }
     },
     "lib/forge-std/src/Test.sol": {
-      "lastModificationDate": 1658181123467,
-      "contentHash": "bc8b62444227c339153e1198116d79ba",
+      "lastModificationDate": 1658863047535,
+      "contentHash": "1759d8269e5e14639f70a8b52dcee716",
       "sourceName": "lib/forge-std/src/Test.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -117,7 +141,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -152,7 +176,15 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -170,7 +202,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -190,7 +222,15 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -208,7 +248,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -221,14 +261,22 @@
       }
     },
     "lib/forge-std/src/console2.sol": {
-      "lastModificationDate": 1658142678100,
+      "lastModificationDate": 1658181123467,
       "contentHash": "5df91f8e93efbfcccf68973dc1b74a70",
       "sourceName": "lib/forge-std/src/console2.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -246,7 +294,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -259,14 +307,22 @@
       }
     },
     "lib/solmate/src/tokens/ERC20.sol": {
-      "lastModificationDate": 1657888012772,
+      "lastModificationDate": 1658181070527,
       "contentHash": "a0b1801a2ffe030a0f4ff4d508ceb74f",
       "sourceName": "lib/solmate/src/tokens/ERC20.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -284,7 +340,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -297,14 +353,22 @@
       }
     },
     "src/contracts/WrappedAgToken.sol": {
-      "lastModificationDate": 1658257857503,
-      "contentHash": "a7535f625cb26007b0c3748c2cfbb125",
+      "lastModificationDate": 1659362553556,
+      "contentHash": "6e5aa0ae646cb91a1425cf816770f553",
       "sourceName": "src/contracts/WrappedAgToken.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -322,7 +386,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -342,15 +406,23 @@
         }
       }
     },
-    "src/contracts/interfaces/IAgToken.sol": {
-      "lastModificationDate": 1658139100320,
-      "contentHash": "cfa8878382bd1889c277e97a1205e9ea",
-      "sourceName": "src/contracts/interfaces/IAgToken.sol",
+    "src/contracts/WrappedAgTokenFactory.sol": {
+      "lastModificationDate": 1659350785455,
+      "contentHash": "9e2a5649b3ef7d8311eadb86ff645bac",
+      "sourceName": "src/contracts/WrappedAgTokenFactory.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -368,7 +440,63 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/solmate/src/tokens/ERC20.sol",
+        "src/contracts/WrappedAgToken.sol",
+        "src/contracts/interfaces/IAgToken.sol",
+        "src/contracts/interfaces/IAgaveProtocolDataProvider.sol",
+        "src/contracts/interfaces/IERC20.sol",
+        "src/contracts/interfaces/ILendingPool.sol",
+        "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
+        "src/contracts/interfaces/IScaledBalanceToken.sol",
+        "src/contracts/types/DataTypes.sol"
+      ],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "WrappedAgTokenFactory": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "WrappedAgTokenFactory.sol/WrappedAgTokenFactory.json"
+        }
+      }
+    },
+    "src/contracts/interfaces/IAgToken.sol": {
+      "lastModificationDate": 1658139100320,
+      "contentHash": "cfa8878382bd1889c277e97a1205e9ea",
+      "sourceName": "src/contracts/interfaces/IAgToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -386,15 +514,23 @@
         }
       }
     },
-    "src/contracts/interfaces/IERC20.sol": {
-      "lastModificationDate": 1657719051049,
-      "contentHash": "8254685c4261e8c93db0eb5b569f8461",
-      "sourceName": "src/contracts/interfaces/IERC20.sol",
+    "src/contracts/interfaces/IAgaveProtocolDataProvider.sol": {
+      "lastModificationDate": 1658578361820,
+      "contentHash": "9675fc20e76240e77b76aff567401858",
+      "sourceName": "src/contracts/interfaces/IAgaveProtocolDataProvider.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -412,7 +548,53 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "IAgaveProtocolDataProvider": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "IAgaveProtocolDataProvider.sol/IAgaveProtocolDataProvider.json"
+        }
+      }
+    },
+    "src/contracts/interfaces/IERC20.sol": {
+      "lastModificationDate": 1657719051049,
+      "contentHash": "8254685c4261e8c93db0eb5b569f8461",
+      "sourceName": "src/contracts/interfaces/IERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -432,7 +614,15 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -450,7 +640,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -473,7 +663,15 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -491,7 +689,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -511,7 +709,15 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -529,7 +735,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -541,15 +747,23 @@
         }
       }
     },
-    "src/contracts/types/DataTypes.sol": {
-      "lastModificationDate": 1657719051049,
-      "contentHash": "40e4148fa42fe92a1f7f5d226e135e54",
-      "sourceName": "src/contracts/types/DataTypes.sol",
+    "src/contracts/interfaces/IWrappedAgToken.sol": {
+      "lastModificationDate": 1659265568469,
+      "contentHash": "d21d9fba767dde9a175e04bdc6e0dbfb",
+      "sourceName": "src/contracts/interfaces/IWrappedAgToken.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -567,7 +781,53 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IWrappedAgToken": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "IWrappedAgToken.sol/IWrappedAgToken.json"
+        }
+      }
+    },
+    "src/contracts/types/DataTypes.sol": {
+      "lastModificationDate": 1658508724034,
+      "contentHash": "40e4148fa42fe92a1f7f5d226e135e54",
+      "sourceName": "src/contracts/types/DataTypes.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -580,14 +840,22 @@
       }
     },
     "src/test/WrappedAgToken.t.sol": {
-      "lastModificationDate": 1658260829273,
-      "contentHash": "52eb823b4807feee800c303a93746b7a",
+      "lastModificationDate": 1659363703886,
+      "contentHash": "6340b842e1545f10539a84c9d4f85530",
       "sourceName": "src/test/WrappedAgToken.t.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -605,7 +873,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -632,15 +900,23 @@
         }
       }
     },
-    "src/test/utils/DSInvariantTest.sol": {
-      "lastModificationDate": 1657890824802,
-      "contentHash": "eef63c069b48071868fdcbd7c8402136",
-      "sourceName": "src/test/utils/DSInvariantTest.sol",
+    "src/test/WrappedAgTokenFactory.t.sol": {
+      "lastModificationDate": 1659450306891,
+      "contentHash": "41204feb99fce119b60a07cb22e5fb5d",
+      "sourceName": "src/test/WrappedAgTokenFactory.t.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -658,7 +934,71 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ds-test/src/test.sol",
+        "lib/forge-std/src/Script.sol",
+        "lib/forge-std/src/Test.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol",
+        "lib/solmate/src/tokens/ERC20.sol",
+        "src/contracts/WrappedAgToken.sol",
+        "src/contracts/WrappedAgTokenFactory.sol",
+        "src/contracts/interfaces/IAgToken.sol",
+        "src/contracts/interfaces/IAgaveProtocolDataProvider.sol",
+        "src/contracts/interfaces/IERC20.sol",
+        "src/contracts/interfaces/ILendingPool.sol",
+        "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
+        "src/contracts/interfaces/IScaledBalanceToken.sol",
+        "src/contracts/interfaces/IWrappedAgToken.sol",
+        "src/contracts/types/DataTypes.sol"
+      ],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "WrappedAgTokenTest": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "WrappedAgTokenFactory.t.sol/WrappedAgTokenTest.json"
+        }
+      }
+    },
+    "src/test/utils/DSInvariantTest.sol": {
+      "lastModificationDate": 1657890824802,
+      "contentHash": "eef63c069b48071868fdcbd7c8402136",
+      "sourceName": "src/test/utils/DSInvariantTest.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -678,7 +1018,15 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -696,7 +1044,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
@@ -712,14 +1060,22 @@
       }
     },
     "src/test/utils/Hevm.sol": {
-      "lastModificationDate": 1657890824802,
+      "lastModificationDate": 1658180123617,
       "contentHash": "60742aa83f930a4226fbe7676f06b607",
       "sourceName": "src/test/utils/Hevm.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
           },
           "metadata": {
             "bytecodeHash": "ipfs"
@@ -737,7 +1093,7 @@
               ]
             }
           },
-          "evmVersion": "london",
+          "evmVersion": "berlin",
           "libraries": {}
         }
       },
