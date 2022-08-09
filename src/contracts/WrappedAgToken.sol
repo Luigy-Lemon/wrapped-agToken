@@ -51,8 +51,6 @@ contract WrappedAgToken is ERC20, ConditionalSwapperAdapter {
     manager = governanceAddress;
     swapper = conditionalSwapper;
     factory = msg.sender;
-    underlyingAgToken.approve(address(underlyingAgToken.POOL()), type(uint256).max);
-    ERC20(reserveAsset).approve(address(underlyingAgToken.POOL()), type(uint256).max);
   }
 
     /*//////////////////////////////////////////////////////////////
