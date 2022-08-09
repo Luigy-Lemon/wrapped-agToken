@@ -8,7 +8,7 @@ import {ILendingPool} from "./interfaces/ILendingPool.sol";
 import {DataTypes} from  "./types/DataTypes.sol";
 
 /// @notice Wrapped AgToken (ERC-20) implementation.
-/// @author Luigy-Lemon (https://github.com/Rari-Capital/solmate/blob/main/src/tokens/WETH.sol)
+/// @author Luigy-Lemon
 /// @author Inspired by Solmate WETH (https://github.com/Rari-Capital/solmate/blob/main/src/tokens/WETH.sol)
 contract WrappedAgToken is ERC20, ConditionalSwapperAdapter {
 
