@@ -9,7 +9,8 @@ import "./interfaces/IAgaveProtocolDataProvider.sol";
 contract WrappedAgTokenFactory {
     address public Collector;
     address public Governance;
-    address immutable public Provider;
+    address public immutable Provider;
+    address public Swapper;
 
     mapping(address => address) public unwrapped;
 
@@ -38,11 +39,13 @@ contract WrappedAgTokenFactory {
     constructor(
         address dataProvider,
         address governanceAddress,
-        address collectorAddress
+        address collectorAddress,
+        address conditionalSwapper
     ) {
         Provider = dataProvider;
         Governance = governanceAddress;
         Collector = collectorAddress;
+        Swapper = conditionalSwapper;
     }
 
     modifier isGovernance() {
@@ -64,7 +67,15 @@ contract WrappedAgTokenFactory {
         newToken = address(
             new WrappedAgToken{
                 salt: keccak256(abi.encode(agTokenAddress, address(this)))
-            }(name, symbol, decimals, agTokenAddress, Collector, Governance)
+            }(
+                name,
+                symbol,
+                decimals,
+                agTokenAddress,
+                Collector,
+                Governance,
+                Swapper
+            )
         );
         unwrapped[newToken] = agTokenAddress;
         emit WrappedAgTokenCreated(
@@ -102,7 +113,8 @@ contract WrappedAgTokenFactory {
                                         decimals,
                                         agTokenAddress,
                                         Collector,
-                                        Governance
+                                        Governance,
+                                        Swapper
                                     )
                                 )
                             )
@@ -118,20 +130,24 @@ contract WrappedAgTokenFactory {
         return (size > 0);
     }
 
-    function deployWrappedAgTokens(uint limitDeployments)
+    function deployWrappedAgTokens(uint256 limitDeployments)
         external
         returns (address[] memory deployedWrappers)
     {
-        TokenData[] memory agTokens = IAgaveProtocolDataProvider(Provider).getAllATokens();
+        TokenData[] memory agTokens = IAgaveProtocolDataProvider(Provider)
+            .getAllATokens();
         uint256 n = 0;
         uint256 d = 0;
         address[] memory deployed = new address[](limitDeployments);
-        while (d < limitDeployments && n < agTokens.length) { // n = 0, limit = 2, agTokens.length = 5
+        while (d < limitDeployments && n < agTokens.length) {
+            // n = 0, limit = 2, agTokens.length = 5
             // type WrappedAgToken has the ERC20 methods required
-            WrappedAgToken asset =  WrappedAgToken(payable(agTokens[n].tokenAddress));
+            WrappedAgToken asset = WrappedAgToken(
+                payable(agTokens[n].tokenAddress)
+            );
             string memory assetName = string.concat("Wrapped ", asset.name());
             string memory assetSymbol = string.concat("w", asset.symbol());
-            uint8  assetDecimals = asset.decimals();
+            uint8 assetDecimals = asset.decimals();
             address assetAddress = agTokens[n].tokenAddress;
             if (
                 checkIfWrapperAlreadyExists(
@@ -144,7 +160,12 @@ contract WrappedAgTokenFactory {
                 n++;
                 continue;
             }
-            address newWrapper = deploy(assetName, assetSymbol, assetDecimals, assetAddress);
+            address newWrapper = deploy(
+                assetName,
+                assetSymbol,
+                assetDecimals,
+                assetAddress
+            );
             deployed[d] = newWrapper;
             n++;
             d++;
@@ -162,33 +183,34 @@ contract WrappedAgTokenFactory {
         string memory assetSymbol = string.concat("w", asset.symbol());
         return
             address(
-            uint160(
-                uint256(
-                    keccak256(
-                        abi.encodePacked(
-                            bytes1(0xff),
-                            address(this),
-                            keccak256(
-                                abi.encode(agTokenAddress, address(this))
-                            ),
-                            keccak256(
-                                abi.encodePacked(
-                                    type(WrappedAgToken).creationCode,
-                                    abi.encode(
-                                        assetName,
-                                        assetSymbol,
-                                        asset.decimals(),
-                                        agTokenAddress,
-                                        Collector,
-                                        Governance
+                uint160(
+                    uint256(
+                        keccak256(
+                            abi.encodePacked(
+                                bytes1(0xff),
+                                address(this),
+                                keccak256(
+                                    abi.encode(agTokenAddress, address(this))
+                                ),
+                                keccak256(
+                                    abi.encodePacked(
+                                        type(WrappedAgToken).creationCode,
+                                        abi.encode(
+                                            assetName,
+                                            assetSymbol,
+                                            asset.decimals(),
+                                            agTokenAddress,
+                                            Collector,
+                                            Governance,
+                                            Swapper
+                                        )
                                     )
                                 )
                             )
                         )
                     )
                 )
-            )
-        );
+            );
     }
 
     function setNewGovernance(address governanceAddress) external isGovernance {
@@ -201,14 +223,19 @@ contract WrappedAgTokenFactory {
         emit CollectorChanged(collectorAddress);
     }
 
-    function delegateNewManager(address[] calldata wrappedAgTokens, address newManager)
-        external
-        isGovernance
-    {
+    function setNewSwapper(address swapperAddress) external isGovernance {
+        Swapper = swapperAddress;
+        emit CollectorChanged(swapperAddress);
+    }
+
+    function delegateNewManager(
+        address[] calldata wrappedAgTokens,
+        address newManager
+    ) external isGovernance {
         require(wrappedAgTokens.length > 0, "Provide addresses");
         for (uint256 i = 0; i < wrappedAgTokens.length; i++) {
             require(
-                unwrapped[wrappedAgTokens[i]] != address(0) ,
+                unwrapped[wrappedAgTokens[i]] != address(0),
                 "token does not exist"
             );
             WrappedAgToken(payable(wrappedAgTokens[i])).setManager(newManager);
@@ -225,7 +252,25 @@ contract WrappedAgTokenFactory {
                 unwrapped[wrappedAgTokens[i]] != address(0),
                 "token does not exist"
             );
-            WrappedAgToken(payable(wrappedAgTokens[i])).setInterestCollector(newCollector);
+            WrappedAgToken(payable(wrappedAgTokens[i])).setInterestCollector(
+                newCollector
+            );
+        }
+    }
+
+    function delegateNewSwapper(
+        address[] calldata wrappedAgTokens,
+        address newSwapper
+    ) external isGovernance {
+        require(wrappedAgTokens.length > 0, "Provide addresses");
+        for (uint256 i = 0; i < wrappedAgTokens.length; i++) {
+            require(
+                unwrapped[wrappedAgTokens[i]] != address(0),
+                "token does not exist"
+            );
+            WrappedAgToken(payable(wrappedAgTokens[i])).setConditionalSwapper(
+                newSwapper
+            );
         }
     }
 

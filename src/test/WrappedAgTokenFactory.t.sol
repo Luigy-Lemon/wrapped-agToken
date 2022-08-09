@@ -4,6 +4,7 @@ pragma solidity >=0.8.0;
 import "forge-std/Test.sol";
 import "forge-std/console2.sol";
 import {IAgToken} from "../contracts/interfaces/IAgToken.sol";
+import {mockCoordinator} from "../contracts/mocks/mockCoordinator.sol";
 import {WrappedAgToken} from "../contracts/WrappedAgToken.sol";
 import {IWrappedAgToken} from "../contracts/interfaces/IWrappedAgToken.sol";
 import {WrappedAgTokenFactory} from "../contracts/WrappedAgTokenFactory.sol";
@@ -11,6 +12,7 @@ import {TokenData, IAgaveProtocolDataProvider} from "../contracts/interfaces/IAg
 
 contract WrappedAgTokenTest is Test {
     WrappedAgTokenFactory token;
+    mockCoordinator coordinator;
 
     bytes32 constant PERMIT_TYPEHASH =
         keccak256(
@@ -19,10 +21,12 @@ contract WrappedAgTokenTest is Test {
 
     function setUp() public {
         vm.startPrank(0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A);
+        coordinator = new mockCoordinator();
         token = new WrappedAgTokenFactory(
             0x24dCbd376Db23e4771375092344f5CbEA3541FC0, // Provider
             0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A, // Governance
-            0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe // Collector
+            0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe, // Collector
+            address(coordinator) // Swapper
         );
         vm.stopPrank();
     }
@@ -37,6 +41,7 @@ contract WrappedAgTokenTest is Test {
             0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A
         );
         assertEq(token.Collector(), 0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
+        assertEq(token.Swapper(), address(coordinator));
     }
 
     function testIsGovernance() public {
@@ -183,7 +188,8 @@ contract WrappedAgTokenTest is Test {
                                             assetDecimals,
                                             assetAddress,
                                             token.Collector(),
-                                            token.Governance()
+                                            token.Governance(),
+                                            token.Swapper()
                                         )
                                     )
                                 )
@@ -231,12 +237,28 @@ contract WrappedAgTokenTest is Test {
         vm.stopPrank();
     }
 
+    function testSetNewSwapper(address newSwapper) external {
+        address Governance = token.Governance();
+        vm.startPrank(Governance);
+        token.setNewSwapper(newSwapper);
+        assertEq(newSwapper, token.Swapper());
+        vm.stopPrank();
+    }
+
+    function testFailSetNewSwapper(address newSwapper) external {
+        vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
+        token.setNewSwapper(newSwapper);
+        assertEq(newSwapper, token.Swapper());
+        vm.stopPrank();
+    }
+
     function testDelegateNewManager(address newManager) external {
         vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
         address[] memory deployed = token.deployWrappedAgTokens(2);
         vm.stopPrank();
         address Governance = token.Governance();
         vm.startPrank(Governance);
+        vm.assume(newManager != address(0));
         token.delegateNewManager(deployed, newManager);
         assertEq(newManager, IWrappedAgToken(payable(deployed[0])).manager());
         assertEq(newManager, IWrappedAgToken(payable(deployed[1])).manager());
@@ -297,6 +319,25 @@ contract WrappedAgTokenTest is Test {
         assertEq(
             newCollector,
             IWrappedAgToken(payable(deployed[1])).interestCollector()
+        );
+        vm.stopPrank();
+    }
+
+    function testDelegateNewSwapper(address newSwapper) external {
+        vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
+        address[] memory deployed = token.deployWrappedAgTokens(2);
+        vm.stopPrank();
+        address Governance = token.Governance();
+        vm.startPrank(Governance);
+        vm.assume(newSwapper != address(0));
+        token.delegateNewSwapper(deployed, newSwapper);
+        assertEq(
+            newSwapper,
+            IWrappedAgToken(payable(deployed[0])).swapper()
+        );
+        assertEq(
+            newSwapper,
+            IWrappedAgToken(payable(deployed[1])).swapper()
         );
         vm.stopPrank();
     }

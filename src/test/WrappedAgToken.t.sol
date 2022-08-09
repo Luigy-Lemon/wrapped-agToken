@@ -4,6 +4,7 @@ pragma solidity >=0.8.0;
 import "forge-std/Test.sol";
 import "forge-std/console2.sol";
 import {IAgToken} from "../contracts/interfaces/IAgToken.sol";
+import {mockCoordinator} from "../contracts/mocks/mockCoordinator.sol";
 import {IERC20} from "../contracts/interfaces/IERC20.sol";
 import {DataTypes} from "../contracts/types/DataTypes.sol";
 import {WrappedAgToken} from "../contracts/WrappedAgToken.sol";
@@ -11,21 +12,26 @@ import {ILendingPool} from "../contracts/interfaces/ILendingPool.sol";
 
 contract WrappedAgTokenTest is Test {
     WrappedAgToken token;
+    address coordinator;
 
     bytes32 constant PERMIT_TYPEHASH =
         keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
 
     function setUp() public {
         vm.startPrank(0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A);
+        coordinator = address(new mockCoordinator());
         token = new WrappedAgToken(
             "Wrapped agUSDC", 
             "WagUSDC", 
             6,  
             0x291B5957c9CBe9Ca6f0b98281594b4eB495F4ec1, //agUSDC
             0xbad2BEE000000000000000000000000000000000,
-            0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A // Agave Treasury
+            0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A, // Agave Treasury
+            coordinator // conditionalSwapper Coordinator
         );
-        IAgToken(0x291B5957c9CBe9Ca6f0b98281594b4eB495F4ec1).transfer(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe, 100e6); //agToken sample
+        IAgToken agToken = IAgToken(0x291B5957c9CBe9Ca6f0b98281594b4eB495F4ec1);
+        IERC20(agToken.UNDERLYING_ASSET_ADDRESS()).transfer(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe, 100e6); //agToken sample
+        agToken.transfer(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe, 100e6); //agToken sample
         vm.stopPrank();
         vm.startPrank(0x6626528DE0c75Ccc7A0d24F2D24b99060f74EdEe);
         IERC20(0x870Bb2C024513B5c9A69894dCc65fB5c47e422f3).transfer(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe, 100e18); //rewardToken
@@ -39,6 +45,7 @@ contract WrappedAgTokenTest is Test {
         assertEq(address(token.underlyingAgToken()), 0x291B5957c9CBe9Ca6f0b98281594b4eB495F4ec1);
         assertEq(token.interestCollector(), 0xbad2BEE000000000000000000000000000000000);
         assertEq(token.manager(), 0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A);
+        assertEq(token.swapper(), coordinator);
     }
 
 
@@ -91,6 +98,7 @@ contract WrappedAgTokenTest is Test {
         token.withdraw( 90e6);
         assertEq(token.totalSupply(), 100e6 - 90e6);
         assertEq(token.balanceOf(msg.sender), 10e6);
+        assertEq(undToken.balanceOf(msg.sender), 90e6);
         vm.stopPrank();
     }
 
@@ -546,6 +554,14 @@ contract WrappedAgTokenTest is Test {
         vm.startPrank(manager);
         token.setManager(newManager);
         assertEq(newManager, token.manager());
+        vm.stopPrank();
+    }
+
+    function testSetConditionalSwapper(address newSwapper) external  {
+        address manager = token.manager();
+        vm.startPrank(manager);
+        token.setConditionalSwapper(newSwapper);
+        assertEq(newSwapper, token.swapper());
         vm.stopPrank();
     }
 }

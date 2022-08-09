@@ -306,55 +306,9 @@
         }
       }
     },
-    "lib/solmate/src/tokens/ERC20.sol": {
-      "lastModificationDate": 1658181070527,
-      "contentHash": "a0b1801a2ffe030a0f4ff4d508ceb74f",
-      "sourceName": "lib/solmate/src/tokens/ERC20.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200,
-            "details": {
-              "constantOptimizer": true,
-              "yul": true,
-              "yulDetails": {
-                "stackAllocation": true,
-                "optimizerSteps": "dhfoDgvulfnTUtnIf"
-              }
-            }
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ]
-            }
-          },
-          "evmVersion": "berlin",
-          "libraries": {}
-        }
-      },
-      "imports": [],
-      "versionRequirement": ">=0.8.0",
-      "artifacts": {
-        "ERC20": {
-          "0.8.14+commit.80d49f37.Linux.gcc": "ERC20.sol/ERC20.json"
-        }
-      }
-    },
     "src/contracts/WrappedAgToken.sol": {
-      "lastModificationDate": 1659362553556,
-      "contentHash": "6e5aa0ae646cb91a1425cf816770f553",
+      "lastModificationDate": 1660060463069,
+      "contentHash": "2f76cdb6a769c9ae9e8dea3266ce2f0b",
       "sourceName": "src/contracts/WrappedAgToken.sol",
       "solcConfig": {
         "settings": {
@@ -391,13 +345,16 @@
         }
       },
       "imports": [
-        "lib/solmate/src/tokens/ERC20.sol",
         "src/contracts/interfaces/IAgToken.sol",
+        "src/contracts/interfaces/ICoordinator.sol",
         "src/contracts/interfaces/IERC20.sol",
         "src/contracts/interfaces/ILendingPool.sol",
         "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
         "src/contracts/interfaces/IScaledBalanceToken.sol",
-        "src/contracts/types/DataTypes.sol"
+        "src/contracts/interfaces/IUserProxy.sol",
+        "src/contracts/types/DataTypes.sol",
+        "src/contracts/utils/ConditionalSwapperAdapter.sol",
+        "src/contracts/utils/ERC20.sol"
       ],
       "versionRequirement": ">=0.8.0",
       "artifacts": {
@@ -407,8 +364,8 @@
       }
     },
     "src/contracts/WrappedAgTokenFactory.sol": {
-      "lastModificationDate": 1659350785455,
-      "contentHash": "9e2a5649b3ef7d8311eadb86ff645bac",
+      "lastModificationDate": 1659951222196,
+      "contentHash": "dc8e00d86ec5159f9904d4249298fbac",
       "sourceName": "src/contracts/WrappedAgTokenFactory.sol",
       "solcConfig": {
         "settings": {
@@ -445,15 +402,18 @@
         }
       },
       "imports": [
-        "lib/solmate/src/tokens/ERC20.sol",
         "src/contracts/WrappedAgToken.sol",
         "src/contracts/interfaces/IAgToken.sol",
         "src/contracts/interfaces/IAgaveProtocolDataProvider.sol",
+        "src/contracts/interfaces/ICoordinator.sol",
         "src/contracts/interfaces/IERC20.sol",
         "src/contracts/interfaces/ILendingPool.sol",
         "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
         "src/contracts/interfaces/IScaledBalanceToken.sol",
-        "src/contracts/types/DataTypes.sol"
+        "src/contracts/interfaces/IUserProxy.sol",
+        "src/contracts/types/DataTypes.sol",
+        "src/contracts/utils/ConditionalSwapperAdapter.sol",
+        "src/contracts/utils/ERC20.sol"
       ],
       "versionRequirement": ">=0.8.0",
       "artifacts": {
@@ -557,6 +517,52 @@
       "artifacts": {
         "IAgaveProtocolDataProvider": {
           "0.8.14+commit.80d49f37.Linux.gcc": "IAgaveProtocolDataProvider.sol/IAgaveProtocolDataProvider.json"
+        }
+      }
+    },
+    "src/contracts/interfaces/ICoordinator.sol": {
+      "lastModificationDate": 1659712671037,
+      "contentHash": "3f9e953d1c8efe00e757897662beaad6",
+      "sourceName": "src/contracts/interfaces/ICoordinator.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "berlin",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "ICoordinator": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "ICoordinator.sol/ICoordinator.json"
         }
       }
     },
@@ -747,9 +753,55 @@
         }
       }
     },
+    "src/contracts/interfaces/IUserProxy.sol": {
+      "lastModificationDate": 1659712858427,
+      "contentHash": "7e42e756b161736caf8ed24d8e1e9a5c",
+      "sourceName": "src/contracts/interfaces/IUserProxy.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "berlin",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IUserProxy": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "IUserProxy.sol/IUserProxy.json"
+        }
+      }
+    },
     "src/contracts/interfaces/IWrappedAgToken.sol": {
-      "lastModificationDate": 1659265568469,
-      "contentHash": "d21d9fba767dde9a175e04bdc6e0dbfb",
+      "lastModificationDate": 1659951831176,
+      "contentHash": "9264d40066b04d37229523194e760662",
       "sourceName": "src/contracts/interfaces/IWrappedAgToken.sol",
       "solcConfig": {
         "settings": {
@@ -790,6 +842,52 @@
       "artifacts": {
         "IWrappedAgToken": {
           "0.8.14+commit.80d49f37.Linux.gcc": "IWrappedAgToken.sol/IWrappedAgToken.json"
+        }
+      }
+    },
+    "src/contracts/mocks/mockCoordinator.sol": {
+      "lastModificationDate": 1659955962406,
+      "contentHash": "1816e2bb2814970fc5a75460b52f9a57",
+      "sourceName": "src/contracts/mocks/mockCoordinator.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "berlin",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "mockCoordinator": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "mockCoordinator.sol/mockCoordinator.json"
         }
       }
     },
@@ -839,9 +937,104 @@
         }
       }
     },
+    "src/contracts/utils/ConditionalSwapperAdapter.sol": {
+      "lastModificationDate": 1659951224746,
+      "contentHash": "98b949bf669d1c1fae32e157466e465a",
+      "sourceName": "src/contracts/utils/ConditionalSwapperAdapter.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "berlin",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "src/contracts/interfaces/ICoordinator.sol",
+        "src/contracts/interfaces/IUserProxy.sol"
+      ],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "ConditionalSwapperAdapter": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "ConditionalSwapperAdapter.sol/ConditionalSwapperAdapter.json"
+        }
+      }
+    },
+    "src/contracts/utils/ERC20.sol": {
+      "lastModificationDate": 1659950063056,
+      "contentHash": "42c7864cbfe0db49fe5e005f833cfe81",
+      "sourceName": "src/contracts/utils/ERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "constantOptimizer": true,
+              "yul": true,
+              "yulDetails": {
+                "stackAllocation": true,
+                "optimizerSteps": "dhfoDgvulfnTUtnIf"
+              }
+            }
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "berlin",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.8.0",
+      "artifacts": {
+        "ERC20": {
+          "0.8.14+commit.80d49f37.Linux.gcc": "ERC20.sol/ERC20.json"
+        }
+      }
+    },
     "src/test/WrappedAgToken.t.sol": {
-      "lastModificationDate": 1659363703886,
-      "contentHash": "6340b842e1545f10539a84c9d4f85530",
+      "lastModificationDate": 1660060561419,
+      "contentHash": "297871e3036ef6c31f4f66ce971c5025",
       "sourceName": "src/test/WrappedAgToken.t.sol",
       "solcConfig": {
         "settings": {
@@ -884,14 +1077,18 @@
         "lib/forge-std/src/Vm.sol",
         "lib/forge-std/src/console.sol",
         "lib/forge-std/src/console2.sol",
-        "lib/solmate/src/tokens/ERC20.sol",
         "src/contracts/WrappedAgToken.sol",
         "src/contracts/interfaces/IAgToken.sol",
+        "src/contracts/interfaces/ICoordinator.sol",
         "src/contracts/interfaces/IERC20.sol",
         "src/contracts/interfaces/ILendingPool.sol",
         "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
         "src/contracts/interfaces/IScaledBalanceToken.sol",
-        "src/contracts/types/DataTypes.sol"
+        "src/contracts/interfaces/IUserProxy.sol",
+        "src/contracts/mocks/mockCoordinator.sol",
+        "src/contracts/types/DataTypes.sol",
+        "src/contracts/utils/ConditionalSwapperAdapter.sol",
+        "src/contracts/utils/ERC20.sol"
       ],
       "versionRequirement": ">=0.8.0",
       "artifacts": {
@@ -901,8 +1098,8 @@
       }
     },
     "src/test/WrappedAgTokenFactory.t.sol": {
-      "lastModificationDate": 1659450306891,
-      "contentHash": "41204feb99fce119b60a07cb22e5fb5d",
+      "lastModificationDate": 1659956698176,
+      "contentHash": "da7526feed9db4d250396473cec7780d",
       "sourceName": "src/test/WrappedAgTokenFactory.t.sol",
       "solcConfig": {
         "settings": {
@@ -945,17 +1142,21 @@
         "lib/forge-std/src/Vm.sol",
         "lib/forge-std/src/console.sol",
         "lib/forge-std/src/console2.sol",
-        "lib/solmate/src/tokens/ERC20.sol",
         "src/contracts/WrappedAgToken.sol",
         "src/contracts/WrappedAgTokenFactory.sol",
         "src/contracts/interfaces/IAgToken.sol",
         "src/contracts/interfaces/IAgaveProtocolDataProvider.sol",
+        "src/contracts/interfaces/ICoordinator.sol",
         "src/contracts/interfaces/IERC20.sol",
         "src/contracts/interfaces/ILendingPool.sol",
         "src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
         "src/contracts/interfaces/IScaledBalanceToken.sol",
+        "src/contracts/interfaces/IUserProxy.sol",
         "src/contracts/interfaces/IWrappedAgToken.sol",
-        "src/contracts/types/DataTypes.sol"
+        "src/contracts/mocks/mockCoordinator.sol",
+        "src/contracts/types/DataTypes.sol",
+        "src/contracts/utils/ConditionalSwapperAdapter.sol",
+        "src/contracts/utils/ERC20.sol"
       ],
       "versionRequirement": ">=0.8.0",
       "artifacts": {
