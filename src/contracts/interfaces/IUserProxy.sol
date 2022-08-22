@@ -21,4 +21,6 @@ interface IUserProxy {
 
     function initialize(address _owner) external;
 
+    function openFlashloanLoan(address asset) external view returns(bool);
+
 }
