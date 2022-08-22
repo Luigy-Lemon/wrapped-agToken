@@ -8,7 +8,6 @@ import {mockCoordinator} from "../contracts/mocks/mockCoordinator.sol";
 import {IERC20} from "../contracts/interfaces/IERC20.sol";
 import {DataTypes} from "../contracts/types/DataTypes.sol";
 import {WrappedAgToken} from "../contracts/WrappedAgToken.sol";
-import {ILendingPool} from "../contracts/interfaces/ILendingPool.sol";
 
 contract WrappedAgTokenTest is Test {
     WrappedAgToken token;
@@ -47,21 +46,6 @@ contract WrappedAgTokenTest is Test {
         assertEq(token.manager(), 0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A);
         assertEq(token.swapper(), coordinator);
     }
-
-
-    function testIsActive() public {
-        uint256 ACTIVE_MASK = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFF;
-        vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);
-        address reserve = token.reserveAsset();
-        ILendingPool pool = token.POOL();
-        DataTypes.ReserveConfigurationMap memory config = pool.getConfiguration(reserve);
-        assertGt((config.data & ~ACTIVE_MASK) , 0);
-
-        vm.stopPrank();
-    
-    }
-
-    //TODO: Test with an asset that is now Active
 
     function testIsManager() public {
         vm.startPrank(0x1BEeEeeEEeeEeeeeEeeEEEEEeeEeEeEEeEeEeEEe);

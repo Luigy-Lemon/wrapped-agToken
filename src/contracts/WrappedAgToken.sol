@@ -4,7 +4,6 @@ pragma solidity >=0.8.0;
 import {ERC20} from "./utils/ERC20.sol";
 import {ConditionalSwapperAdapter} from "./utils/ConditionalSwapperAdapter.sol";
 import {IAgToken} from "./interfaces/IAgToken.sol";
-import {ILendingPool} from "./interfaces/ILendingPool.sol";
 import {DataTypes} from  "./types/DataTypes.sol";
 
 /// @notice Wrapped AgToken (ERC-20) implementation.
@@ -33,7 +32,6 @@ contract WrappedAgToken is ERC20, ConditionalSwapperAdapter {
     address public swapper;
     address public immutable reserveAsset;
     IAgToken public immutable underlyingAgToken;
-    ILendingPool public immutable POOL;
 
     constructor(
     string memory tokenName,
@@ -46,7 +44,6 @@ contract WrappedAgToken is ERC20, ConditionalSwapperAdapter {
   ) ERC20(tokenName, tokenSymbol, tokenDecimals) ConditionalSwapperAdapter(conditionalSwapper)  {
     interestCollector = _interestCollector;
     underlyingAgToken = IAgToken(_underlyingAgToken);
-    POOL = ILendingPool(underlyingAgToken.POOL());
     reserveAsset = underlyingAgToken.UNDERLYING_ASSET_ADDRESS();
     manager = governanceAddress;
     swapper = conditionalSwapper;
@@ -59,13 +56,6 @@ contract WrappedAgToken is ERC20, ConditionalSwapperAdapter {
 
     modifier isManager {
         require(msg.sender == manager ||msg.sender == factory, "UNAUTHORIZED");
-        _;
-    }
-
-    modifier isActive {
-        DataTypes.ReserveConfigurationMap memory config = POOL.getConfiguration(reserveAsset);
-        
-        require((config.data & ~ACTIVE_MASK) != 0, "Underlying Asset is not active");
         _;
     }
 
@@ -122,7 +112,7 @@ contract WrappedAgToken is ERC20, ConditionalSwapperAdapter {
                         WRAPPER LOGIC
     //////////////////////////////////////////////////////////////*/
 
-    function deposit(uint256 amount) public isActive() {
+    function deposit(uint256 amount) public{
 
         underlyingAgToken.transferFrom(msg.sender, address(this), amount);
 
